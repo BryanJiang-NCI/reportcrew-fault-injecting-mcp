@@ -27,6 +27,42 @@
             "parameters": {
                 "offset": 5
             }
+        },
+        {
+            "tool": "web_search",
+            "type": "latency",
+            "probability": 1.0,
+            "enabled": false,
+            "parameters": {
+                "delay_ms": 2000
+            }
+        },
+        {
+            "tool": "web_search",
+            "type": "error",
+            "probability": 1.0,
+            "enabled": false,
+            "parameters": {
+                "message": "Simulated upstream tool failure"
+            }
+        },
+        {
+            "tool": "fetch_page",
+            "type": "latency",
+            "probability": 1.0,
+            "enabled": false,
+            "parameters": {
+                "delay_ms": 2000
+            }
+        },
+        {
+            "tool": "fetch_page",
+            "type": "error",
+            "probability": 1.0,
+            "enabled": false,
+            "parameters": {
+                "message": "Simulated upstream tool failure"
+            }
         }
     ]
 }

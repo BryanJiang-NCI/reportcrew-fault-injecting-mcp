@@ -78,7 +78,7 @@ The proxy reads the file at startup; **restart it after editing**. Probability m
 - `error`: `message` is returned as an MCP tool error (`isError=true`); upstream is not called.
 - `offset`: `offset` is added to a successful calculator result. Both the structured result and its text representation are updated, while the call remains successful.
 
-Latency and error can target any of the toy server's three tools. Offset applies only to `calculator`. Injected events are appended to the configured JSONL log; timestamps are UTC. Do not put secrets in policy parameters or error messages because these can appear in the log.
+The supplied `config.json` includes disabled latency and error examples for each of the three tools, plus a calculator offset example. Enable the policy you want to try. Offset applies only to `calculator`. Injected events are appended to the configured JSONL log; timestamps are UTC. Do not put secrets in policy parameters or error messages because these can appear in the log.
 
 ## Demo and Tests
 
@@ -99,7 +99,7 @@ python examples/run_demo.py
 pytest -q
 ```
 
-The demo starts temporary servers on ports 18000 and 18001, asserts normal forwarding and each fault, and overwrites [logs/results.jsonl](logs/results.jsonl) and [logs/faults.jsonl](logs/faults.jsonl) with its observations. The included files are from an actual run. Ensure those ports are free before running it. The results show the client responses; the fault log records each injection, including the original and modified values for the offset.
+The demo starts temporary servers on ports 18000 and 18001 and verifies normal forwarding, latency, and tool errors for all three tools. It also verifies a calculator result offset. It uses temporary policies and does not modify `config.json`. It overwrites [logs/results.jsonl](logs/results.jsonl) and [logs/faults.jsonl](logs/faults.jsonl) with its observations. The included files are from an actual run. Ensure those ports are free before running it. The results show the client responses; the fault log records each injection, including the original and modified values for the offset.
 
 ## Design Choices
 
