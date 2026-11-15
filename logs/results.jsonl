@@ -1,6 +1,6 @@
 {"scenario": "normal_web_search", "result": {"content": [{"type": "text", "text": "{\n  \"hits\": [\n    {\n      \"title\": \"Alpha annual report\",\n      \"url\": \"https://example.com/alpha-report\"\n    }\n  ]\n}"}], "structuredContent": {"hits": [{"title": "Alpha annual report", "url": "https://example.com/alpha-report"}]}, "isError": false}}
 {"scenario": "normal_fetch_page", "result": {"content": [{"type": "text", "text": "{\n  \"status\": 200,\n  \"headers\": {\n    \"content-type\": \"text/plain; charset=utf-8\"\n  },\n  \"text\": \"Fictional Alpha revenue: 100 million.\"\n}"}], "structuredContent": {"status": 200, "headers": {"content-type": "text/plain; charset=utf-8"}, "text": "Fictional Alpha revenue: 100 million."}, "isError": false}}
-{"scenario": "normal", "elapsed_seconds": 0.025, "result": {"content": [{"type": "text", "text": "{\n  \"result\": 100\n}"}], "structuredContent": {"result": 100}, "isError": false}}
-{"scenario": "latency", "elapsed_seconds": 0.281, "result": {"content": [{"type": "text", "text": "{\n  \"result\": 100\n}"}], "structuredContent": {"result": 100}, "isError": false}}
-{"scenario": "error", "elapsed_seconds": 0.003, "result": {"content": [{"type": "text", "text": "Simulated upstream tool failure"}], "isError": true}}
+{"scenario": "normal", "elapsed_seconds": 0.026, "result": {"content": [{"type": "text", "text": "{\n  \"result\": 100\n}"}], "structuredContent": {"result": 100}, "isError": false}}
+{"scenario": "latency", "elapsed_seconds": 0.297, "result": {"content": [{"type": "text", "text": "{\n  \"result\": 100\n}"}], "structuredContent": {"result": 100}, "isError": false}}
+{"scenario": "error", "elapsed_seconds": 0.004, "result": {"content": [{"type": "text", "text": "Simulated upstream tool failure"}], "isError": true}}
 {"scenario": "offset", "elapsed_seconds": 0.027, "result": {"content": [{"type": "text", "text": "{\"result\": 105}"}], "structuredContent": {"result": 105}, "isError": false}}

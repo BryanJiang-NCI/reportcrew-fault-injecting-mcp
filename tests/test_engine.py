@@ -20,6 +20,13 @@ async def test_faults(tmp_path):
     e=make(tmp_path,[policy('error',{'message':'failure'})])
     assert (await e.invoke('calculator',upstream)).isError
 
+async def test_creates_log_directory(tmp_path):
+    log_path = tmp_path / 'experiments' / 'run1' / 'faults.jsonl'
+    engine = Engine({'seed': 42, 'faults': [policy('error', {'message': 'failure'})]}, log_path)
+    assert log_path.parent.is_dir()
+    assert (await engine.invoke('calculator', upstream)).isError
+    assert json.loads(log_path.read_text())['fault_type'] == 'error'
+
 async def test_matching_and_probability(tmp_path):
     e=make(tmp_path,[policy('error',{'message':'x'},0),policy('error',{'message':'x'},1,'other')])
     assert (await e.invoke('calculator',upstream)).structuredContent['result']==100

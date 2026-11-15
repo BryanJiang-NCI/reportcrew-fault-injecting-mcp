@@ -32,6 +32,7 @@ def load_config(path):
 class Engine:
     def __init__(self, config, log_path):
         self.config, self.log_path = config, Path(log_path)
+        self.log_path.parent.mkdir(parents=True, exist_ok=True)
         self.random = random.Random(config['seed'])
 
     def select(self, tool):
