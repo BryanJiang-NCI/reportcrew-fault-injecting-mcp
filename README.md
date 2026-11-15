@@ -103,17 +103,17 @@ The demo starts temporary servers on ports 18000 and 18001, asserts normal forwa
 
 ## Design Choices
 
-- **Streamable HTTP and the official SDK:** the client, proxy, and toy server communicate locally using MCP Python SDK 1.26.0. The proxy reconstructs SDK messages rather than forwarding bytes unchanged.
-- **Policy-driven injection:** JSON policies select a tool, fault and probability. The engine applies latency and errors before the upstream call and offsets after a successful result. Multiple selected policies run in configuration order; an injected error short-circuits execution.
-- **Reproducibility:** each matching enabled policy consumes a pseudorandom draw, including probabilities zero and one. The same seed, configuration, sequential call order and process lifetime reproduce decisions. Timestamps, IDs and durations vary; this does not make LLM behavior deterministic.
-- **Local fixtures:** `web_search(query)` and `fetch_page(url)` use a tiny fictional corpus; `example.com` URLs are identifiers, not HTTP requests or real financial reports. Unknown fixture URLs return status 404. `calculator(expression)` evaluates basic arithmetic without unrestricted `eval`.
-- **Structured logging:** injected events include a UTC timestamp, invocation ID, tool, fault and parameters; offset events include numeric before/after summaries. Tool arguments and complete results are not logged.
+- **Transport:** Streamable HTTP and the official MCP Python SDK support a local client–proxy–server demo. The proxy reconstructs SDK messages rather than forwarding bytes unchanged.
+- **Faults and reproducibility:** JSON policies control selection. A fixed seed reproduces decisions for the same sequential call order and process lifetime. Latency and errors are applied before the upstream call; offsets after a successful result.
+- **Local fixtures:** search and fetch use fictional local documents, making the demo independent of the internet. The calculator evaluates basic arithmetic without unrestricted `eval`.
+- **Logging:** injected events are recorded as JSONL without tool arguments or complete results.
 
 ## Known Limitations
 
-- The proxy supports initialization, `tools/list` and `tools/call` over stateless Streamable HTTP, tested with protocol version 2025-11-25. It is not byte-transparent or a general-purpose MCP proxy. Pagination, notifications, resources, prompts, authentication, streaming progress, cancellation propagation and session state are not implemented.
-- Each upstream operation creates a fresh session. Stateful tools are therefore outside the intended scope. Upstream protocol errors may be converted by the SDK into tool errors.
-- Offset injection requires a successful calculator result with a numeric `structuredContent.result`; it is skipped otherwise. It does not corrupt arbitrary tool results.
-- Concurrent scheduling can change the order of random draws. Logging is local append-only JSONL with no rotation; configured parameters may contain sensitive data.
-- The demo is bound to loopback, has no authentication, and is not intended for untrusted networks. Direct dependencies are pinned, but transitive dependencies are not locked.
-- The fault engine uses MCP result types but is independent of HTTP. A ContextForge adapter has not been implemented or verified.
+- **Protocol scope:** initialization, `tools/list` and `tools/call` over stateless Streamable HTTP are supported (tested with protocol version 2025-11-25). Pagination, notifications, resources, prompts, authentication, streaming progress and cancellation propagation are not implemented. Each upstream operation uses a fresh session, so stateful tools are out of scope. Upstream protocol errors may be converted by the SDK into tool errors.
+- **Result corruption:** offset injection applies only to a successful calculator result with numeric `structuredContent.result`; other results are not modified.
+- **Reproducibility and operation:** concurrent scheduling can change the order of random draws. Logs are local, append-only, and not rotated. The demo has no authentication and is intended for loopback use. Transitive dependencies are not locked.
+
+## Future Extension: MCP Gateway
+
+For an environment already using IBM ContextForge, a future adapter could connect the fault engine to its `tool_pre_invoke` and `tool_post_invoke` plugin hooks, applying pre-call faults and result modifications inside the gateway. The adapter would need to map gateway payloads to the engine and verify client-visible error semantics against a specific ContextForge version. The engine currently uses MCP result types but is independent of HTTP; this gateway integration has **not been implemented or tested**. See the [ContextForge plugin documentation](https://github.com/IBM/mcp-context-forge/blob/main/docs/docs/using/plugins/index.md).
