@@ -1,0 +1,32 @@
+{
+    "seed": 42,
+    "faults": [
+        {
+            "tool": "calculator",
+            "type": "latency",
+            "probability": 1.0,
+            "enabled": false,
+            "parameters": {
+                "delay_ms": 2000
+            }
+        },
+        {
+            "tool": "calculator",
+            "type": "error",
+            "probability": 1.0,
+            "enabled": false,
+            "parameters": {
+                "message": "Simulated upstream tool failure"
+            }
+        },
+        {
+            "tool": "calculator",
+            "type": "offset",
+            "probability": 1.0,
+            "enabled": false,
+            "parameters": {
+                "offset": 5
+            }
+        }
+    ]
+}

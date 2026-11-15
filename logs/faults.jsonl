@@ -1,0 +1,3 @@
+{"timestamp": "2026-11-15T06:24:38.446284+00:00", "invocation_id": "c91fa84c7cd7443db9e8d5698421aa04", "tool": "calculator", "fault_type": "latency", "parameters": {"delay_ms": 250}, "injected": true}
+{"timestamp": "2026-11-15T06:24:39.967314+00:00", "invocation_id": "8afb0b4c1bcd4f12891a568028e21acd", "tool": "calculator", "fault_type": "error", "parameters": {"message": "Simulated upstream tool failure"}, "injected": true, "error": "Simulated upstream tool failure"}
+{"timestamp": "2026-11-15T06:24:41.264349+00:00", "invocation_id": "e535e6a44944410c8408f29e66b0b4da", "tool": "calculator", "fault_type": "offset", "parameters": {"offset": 5}, "injected": true, "original_result": 100, "modified_result": 105}
